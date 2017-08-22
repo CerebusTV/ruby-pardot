@@ -18,7 +18,11 @@ module Pardot
       smooth_params object, params
       full_path = fullpath object, path
       headers = create_auth_header object
-      check_response self.class.post(full_path, :query => params, :body => bodyParams, :headers => headers)
+      if params.delete(:params_as_body) 
+        check_response self.class.post(full_path, :query => {}, :body => bodyParams.merge(params), :headers => headers)
+      else
+        check_response self.class.post(full_path, :query => params, :body => bodyParams, :headers => headers)
+      end
       
     rescue Pardot::ExpiredApiKeyError => e
       handle_expired_api_key :post, object, path, params, num_retries, e
