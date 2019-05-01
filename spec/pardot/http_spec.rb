@@ -127,13 +127,18 @@ describe Pardot::Http do
       post
     end
     
+    def verifyBody
+       FakeWeb.last_request.body.should == 'api_key=my_api_key&format=simple&user_key=bar'
+    end
+ 
     it "should call with params as body when requested" do
       fake_post "/api/foo/version/4/bar", :body, {:format => "simple"},
                 %(<?xml version="1.0" encoding="UTF-8"?>\n<rsp stat="fail" version="1.0">\n   <err code="15">Invalid API key or user key</err>\n</rsp>\n)
-      
+
       @client.should_receive(:handle_expired_api_key)
-      post "foo", "/bar", {api_key: "my_api_key", format: "simple", user_key: "bar", params_as_body: true}
+      post "foo", "/bar", {format: "simple", params_as_body: true}
+      verifyBody
     end
-   end
+  end
   
 end
