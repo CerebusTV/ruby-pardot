@@ -1,11 +1,7 @@
 PATH
   remote: .
   specs:
-<<<<<<< HEAD
-    ruby-pardot (1.2.0.patch)
-=======
-    ruby-pardot (1.3.0)
->>>>>>> Pardot-master
+    ruby-pardot (1.3.0.patch)
       crack (= 0.4.3)
       httparty (= 0.13.1)
 
