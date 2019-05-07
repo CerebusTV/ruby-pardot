@@ -18,7 +18,8 @@ module Pardot
       smooth_params object, params
       full_path = fullpath object, path
       headers = create_auth_header object
-      if params.delete(:params_as_body) 
+      if params && params.delete(:params_as_body)
+        # Send all params in the body of the request
         check_response self.class.post(full_path, :query => {}, :body => bodyParams.merge(params), :headers => headers)
       else
         check_response self.class.post(full_path, :query => params, :body => bodyParams, :headers => headers)
